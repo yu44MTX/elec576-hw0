@@ -132,7 +132,39 @@ E("scipy.linalg.cholesky(spd)")     # chol(spd)
 
 # ----- misc table entries -----
 E("np.sort(a, axis=0)")             # sort(a)
+E("np.sort(a, axis=1)")             # sort(a, axis=1)
 E("np.argsort(v)")                  # [b,I] = sort(a)
 E("np.unique(np.array([3, 1, 2, 1, 3]))")   # unique(a)
 E("np.fft.fft(v)")                  # fft(a)
+E("np.fft.ifft(v)")                 # ifft(a)
 E("a.squeeze().shape")              # squeeze(a)
+
+# ----- remaining rows of the table (completeness) -----
+E("a[:, np.nonzero(v > 0.5)[0]]")   # a(:, find(v>0.5))
+E("a[:, v > 0.5]")                  # a(:, v.T > 0.5)
+S("c = a.copy(); c[c < 5] = 0")     # a(a<0.5) = 0
+E("c")
+S("d = a.copy(); d[:] = 3")         # a(:) = 3
+E("d")
+S("y2 = a[1, :].copy()")            # y = x(2,:)
+E("y2")
+S("from numpy.random import default_rng")
+S("rng = default_rng(42)")
+E("rng.random((3, 4))")             # rand(3,4)
+E("np.mgrid[0:3, 0:3]")             # mgrid
+S("X, Y = np.meshgrid([1, 2, 4], [2, 4, 5])")   # meshgrid
+E("X")
+E("Y")
+E("np.ix_([1, 2, 4], [2, 4, 5])")   # ix_
+S("p = a > 3; q = a < 8")
+E("p & q")                          # a & b
+E("p | q")                          # a | b
+S("w = np.array([[7., 8., 9.]])")   # a 1x3 right-hand side
+E("np.linalg.solve(a.T, w.T).T")    # w/a  (right division, w @ inv(a))
+S("Dg, Vg = scipy.linalg.eig(a, spd)")   # generalized eig(a, b)
+E("Dg")
+S("from scipy.sparse.linalg import cg, eigs")
+E("cg(spd, b.ravel())[0]")          # conjugate gradient
+E("eigs(spd, k=1)[0]")              # eigs(a, k=3)
+S("from scipy import signal")
+E("signal.resample(v, 6)")          # resample
